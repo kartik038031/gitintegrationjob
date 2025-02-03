@@ -1,0 +1,62 @@
+# Pizza Ordering System
+
+# Define the menu
+menu = {
+    "1": {"name": "Margherita", "price": 10},
+    "2": {"name": "Pepperoni", "price": 12},
+    "3": {"name": "Veggie", "price": 11},
+    "4": {"name": "BBQ Chicken", "price": 13},
+}
+
+# Function to display the menu
+def display_menu():
+    print("Welcome to the Pizza App!")
+    print("Here's our menu:")
+    for key, item in menu.items():
+        print(f"{key}. {item['name']} - ${item['price']}")
+
+# Function to take an order
+def take_order():
+    order = {}
+    while True:
+        display_menu()
+        choice = input("Enter the number of the pizza you want (or 'q' to quit): ")
+        if choice.lower() == 'q':
+            break
+        if choice in menu:
+            quantity = int(input(f"How many {menu[choice]['name']} pizzas would you like? "))
+            order[menu[choice]['name']] = {
+                "price": menu[choice]['price'],
+                "quantity": quantity
+            }
+        else:
+            print("Invalid choice. Please try again.")
+    return order
+
+# Function to calculate the total cost
+def calculate_total(order):
+    total = 0
+    for item, details in order.items():
+        total += details['price'] * details['quantity']
+    return total
+
+# Function to display the order summary
+def display_order_summary(order, total):
+    print("\nYour order summary:")
+    for item, details in order.items():
+        print(f"{details['quantity']} x {item} - ${details['price']} each")
+    print(f"Total cost: ${total}")
+
+# Main function to run the program
+def main():
+    order = take_order()
+    if order:
+        total = calculate_total(order)
+        display_order_summary(order, total)
+        print("Thank you for ordering! Your pizza will be ready soon.")
+    else:
+        print("No items were ordered. Goodbye!")
+
+# Run the program
+if __name__ == "__main__":
+    main()
